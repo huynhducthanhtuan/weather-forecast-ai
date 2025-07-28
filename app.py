@@ -20,7 +20,7 @@ OWM_API_KEY = os.getenv("OWM_API_KEY")
 
 # Lưu lịch sử hội thoại (global list)
 message_history = [
-    {"role": "system", "content": "Bạn là một chatbot dự báo thời tiết các tỉnh thành Việt Nam. Trả lời ngắn gọn."}
+    {"role": "system", "content": "Bạn là một chatbot dự báo thời tiết các tỉnh thành Việt Nam. Nếu người dùng hỏi về điều gì không liên quan đến thời tiết, hãy trả lời: 'Tôi chỉ có thể hỗ trợ thông tin về thời tiết các tỉnh/thành phố ở Việt Nam. Bạn vui lòng đặt câu hỏi liên quan đến thời tiết nhé.'"}
 ]
 
 # Hàm thêm vào lịch sử
@@ -71,7 +71,6 @@ def index():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    print("before: ", message_history)
     user_input = request.json.get("message")
 
     messages = [
@@ -84,7 +83,7 @@ def chat():
         model=deployment,
         messages=messages,
         functions=functions,
-        function_call="auto"
+        function_call={"name": "get_weather"}
     )
 
     msg = response.choices[0].message
@@ -112,7 +111,6 @@ def chat():
 
             ai_reply = final.choices[0].message.content
             add_history(user_input, ai_reply)
-            print("after: ", message_history)
             return jsonify({"reply": ai_reply})
 
     else:
