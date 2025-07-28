@@ -74,7 +74,6 @@ def chat():
     user_input = request.json.get("message")
 
     messages = [
-        {"role": "system", "content": "Bạn là một chatbot dự báo thời tiết các tỉnh thành Việt Nam. Nếu người dùng hỏi về điều gì không liên quan đến thời tiết, hãy trả lời: 'Tôi chỉ có thể hỗ trợ thông tin về thời tiết các tỉnh/thành phố ở Việt Nam. Bạn vui lòng đặt câu hỏi liên quan đến thời tiết nhé.'"},
         *FEW_SHOT_EXAMPLES,
         *message_history,
         {"role": "user", "content": user_input}
