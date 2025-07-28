@@ -1,3 +1,4 @@
+## ChatBot For Weather Forecast Using AzureOpenAI & OpenWeatherMap API
 How to run this application:
 
 1. Create .env file in root folder:
