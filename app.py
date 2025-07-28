@@ -131,4 +131,7 @@ if __name__ == "__main__":
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         Timer(2.0, open_browser).start()
 
-    app.run(debug=True)
+    if os.getenv("IS_PRODUCTION_MODE") == True:
+        app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    else:
+        app.run(debug=True)
